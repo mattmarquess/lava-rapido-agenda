@@ -59,14 +59,14 @@ using (true);
 Depois de criar o projeto no Supabase, copie:
 
 - `Project URL`
-- `anon public key`
+- `Publishable key`
 
 Cole em `js/settings.js`:
 
 ```js
 const supabaseConfig = {
   url: "SUA_SUPABASE_URL",
-  anonKey: "SUA_SUPABASE_ANON_KEY",
+  anonKey: "SUA_PUBLISHABLE_KEY",
   businessId: "brilhomax"
 };
 ```

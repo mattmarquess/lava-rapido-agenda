@@ -82,8 +82,8 @@ const authStorageKey = "brilhomax_admin_auth";
 const defaultAdminPassword = "1234";
 
 const supabaseConfig = {
-  url: "",
-  anonKey: "",
+  url: "https://yblauxuudydfvfftuqgm.supabase.co",
+  anonKey: "sb_publishable_WQuK4gIkp4MZpVhqNUwD2Q_Phb-VGJw",
   businessId: "brilhomax"
 };
 
