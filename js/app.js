@@ -53,7 +53,7 @@ function initProtectedAdminPage() {
   }
 }
 
-function init() {
+async function init() {
   applySavedSettings();
   renderBusinessInfo();
   renderConnectionStatus();
@@ -65,7 +65,7 @@ function init() {
   }
 
   if (elements.loginPanel || elements.adminContent) {
-    if (requireAdminAuth()) {
+    if (await requireAdminAuth()) {
       initProtectedAdminPage();
     }
     return;

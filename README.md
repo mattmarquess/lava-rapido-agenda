@@ -41,6 +41,7 @@ docs/
   deploy-github-pages.md  Guia para publicar grátis no GitHub Pages
   publish-checklist.md     Checklist antes de enviar o link para clientes
   supabase-setup.md        Guia para ligar o projeto ao Supabase
+  supabase-auth.md         Guia para criar login administrativo no Supabase
 tools/
   create-publish-package.ps1  Cria um arquivo .zip com os arquivos do site
 ```
@@ -54,6 +55,8 @@ O login atual é local, usando `sessionStorage` para a sessão e `localStorage` 
 Para publicar uma demonstração grátis, siga o guia em `docs/deploy-github-pages.md`.
 
 Para salvar agendamentos online, siga `docs/supabase-setup.md`.
+
+Para criar o login administrativo real, siga `docs/supabase-auth.md`.
 
 Para gerar um pacote `.zip` do site:
 
@@ -84,6 +87,7 @@ O arquivo gerado será `lava-rapido-agenda-site.zip`.
 - Preparação para publicação no GitHub Pages
 - Integração opcional com Supabase para agendamentos online
 - Indicador visual de conexão online/local no painel e configurações
+- Login administrativo com Supabase Auth quando Supabase está ativo
 - Status do serviço: Agendado, Em atendimento, Pronto, Entregue e Cancelado
 
 ## Próximo passo

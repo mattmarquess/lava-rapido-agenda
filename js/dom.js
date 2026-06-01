@@ -36,6 +36,7 @@ const elements = {
   adminContent: document.querySelector("#adminContent"),
   loginPanel: document.querySelector("#loginPanel"),
   loginForm: document.querySelector("#loginForm"),
+  loginEmail: document.querySelector("#loginEmail"),
   loginPassword: document.querySelector("#loginPassword"),
   loginMessage: document.querySelector("#loginMessage"),
   resetAdminPasswordButton: document.querySelector("#resetAdminPassword"),

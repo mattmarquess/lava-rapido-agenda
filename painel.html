@@ -33,12 +33,16 @@
           <p class="eyebrow">Área restrita</p>
           <h1>Entrar no painel</h1>
           <label>
+            E-mail
+            <input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="admin@exemplo.com">
+          </label>
+          <label>
             Senha
             <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
           </label>
           <button class="button primary full-button" type="submit">Entrar</button>
           <button class="nav-button login-reset" id="resetAdminPassword" type="button">
-            Restaurar senha padrão 1234
+            Restaurar senha local 1234
           </button>
           <p class="form-message" id="loginMessage" role="status"></p>
         </form>
@@ -54,7 +58,7 @@
           </p>
         </div>
         <div class="local-notice">
-          Os dados desta versão ficam salvos apenas neste navegador. Use exportar/importar para backup ou troca de computador.
+          Com banco online conectado, os agendamentos aparecem em outros dispositivos. Backup e configurações ainda usam este navegador.
         </div>
         <div class="connection-status" id="connectionStatus" role="status"></div>
         <div class="panel-toolbar">
