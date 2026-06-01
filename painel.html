@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Painel - BrilhoMax Lava Rápido</title>
+    <meta
+      name="description"
+      content="Painel administrativo para acompanhar agendamentos do lava rápido."
+    >
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="BrilhoMax Lava Rápido">
+        <span class="brand-mark" id="brandMark">BM</span>
+        <span>
+          <strong id="brandName">BrilhoMax</strong>
+          <small id="brandType">Lava Rápido</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Cliente</a>
+        <a href="#painel">Agenda</a>
+        <a href="configuracoes.html">Configurações</a>
+        <button class="nav-button" id="logoutButton" type="button">Sair</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section login-section" id="loginPanel">
+        <form class="login-card" id="loginForm">
+          <p class="eyebrow">Área restrita</p>
+          <h1>Entrar no painel</h1>
+          <label>
+            Senha
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="button primary full-button" type="submit">Entrar</button>
+          <p class="form-message" id="loginMessage" role="status"></p>
+        </form>
+      </section>
+
+      <section id="adminContent" hidden>
+      <section id="painel" class="section panel-section admin-page">
+        <div class="section-heading">
+          <p class="eyebrow">Dono do lava rápido</p>
+          <h1>Painel do dia</h1>
+          <p class="admin-subtitle">
+            Acompanhe horários, status dos serviços e previsão de faturamento.
+          </p>
+        </div>
+        <div class="local-notice">
+          Os dados desta versão ficam salvos apenas neste navegador. Use exportar/importar para backup ou troca de computador.
+        </div>
+        <div class="panel-toolbar">
+          <input id="panelDate" type="date" aria-label="Data do painel">
+          <div class="panel-stats" id="panelStats" aria-live="polite"></div>
+          <button class="button ghost compact" id="clearDone" type="button">Limpar finalizados</button>
+        </div>
+        <div class="backup-toolbar">
+          <button class="button ghost compact" id="seedDemoData" type="button">Gerar demonstração</button>
+          <button class="button ghost compact" id="exportData" type="button">Exportar dados</button>
+          <label class="button ghost compact import-button">
+            Importar dados
+            <input id="importData" type="file" accept="application/json">
+          </label>
+          <button class="button ghost compact danger-button" id="clearAllData" type="button">Limpar tudo</button>
+          <p class="backup-message" id="backupMessage" role="status"></p>
+        </div>
+        <div class="status-filters" id="statusFilters" aria-label="Filtrar por status"></div>
+        <div class="appointments" id="appointmentsList"></div>
+      </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span id="footerBusiness">BrilhoMax Lava Rápido</span>
+      <span>Painel administrativo local.</span>
+    </footer>
+
+    <script src="js/settings.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/dom.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/appointments.js"></script>
+    <script src="js/backup.js"></script>
+    <script src="js/demo.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

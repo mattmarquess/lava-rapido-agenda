@@ -1,0 +1,5 @@
+*.log
+*.tmp
+*.zip
+backup-*.json
+server*.log

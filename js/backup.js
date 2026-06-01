@@ -1,0 +1,109 @@
+function getCurrentSettingsSnapshot() {
+  return {
+    business: { ...business },
+    services: services.map((service) => ({ ...service })),
+    vehicleTypes: vehicleTypes.map((vehicle) => ({ ...vehicle })),
+    availableTimes: [...availableTimes]
+  };
+}
+
+function createBackupPayload() {
+  return {
+    app: "brilhomax-lava-rapido",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    appointments: getAppointments(),
+    settings: getSavedSettings() || getCurrentSettingsSnapshot()
+  };
+}
+
+function downloadJSON(filename, data) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json"
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function handleExportData() {
+  const date = todayISO();
+  const filename = `backup-brilhomax-${date}.json`;
+
+  downloadJSON(filename, createBackupPayload());
+  elements.backupMessage.textContent = "Backup exportado.";
+}
+
+function validateBackupPayload(payload) {
+  return (
+    payload &&
+    payload.app === "brilhomax-lava-rapido" &&
+    Array.isArray(payload.appointments) &&
+    payload.settings &&
+    payload.settings.business &&
+    Array.isArray(payload.settings.services) &&
+    Array.isArray(payload.settings.vehicleTypes) &&
+    Array.isArray(payload.settings.availableTimes)
+  );
+}
+
+function importBackupPayload(payload) {
+  saveAppointments(payload.appointments);
+  saveSettings(payload.settings);
+  applySavedSettings();
+  renderBusinessInfo();
+  renderAppointments();
+}
+
+function handleImportData(event) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.addEventListener("load", () => {
+    try {
+      const payload = JSON.parse(reader.result);
+
+      if (!validateBackupPayload(payload)) {
+        elements.backupMessage.textContent = "Arquivo de backup inválido.";
+        return;
+      }
+
+      importBackupPayload(payload);
+      elements.backupMessage.textContent = "Backup importado com sucesso.";
+    } catch (error) {
+      elements.backupMessage.textContent = "Não foi possível ler o arquivo.";
+    } finally {
+      elements.importDataInput.value = "";
+    }
+  });
+
+  reader.readAsText(file);
+}
+
+function handleClearAllData() {
+  const confirmed = confirm("Tem certeza que deseja apagar agendamentos e configurações deste navegador?");
+
+  if (!confirmed) return;
+
+  clearAppointments();
+  clearSavedSettings();
+  applyDefaultSettings();
+  renderBusinessInfo();
+  renderAppointments();
+  elements.backupMessage.textContent = "Dados locais apagados.";
+}
+
+function initBackupTools() {
+  if (!elements.exportDataButton) return;
+
+  elements.exportDataButton.addEventListener("click", handleExportData);
+  elements.importDataInput.addEventListener("change", handleImportData);
+  elements.clearAllDataButton.addEventListener("click", handleClearAllData);
+}

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configurações - BrilhoMax Lava Rápido</title>
+    <meta
+      name="description"
+      content="Configurações do sistema de agendamento para lava rápido."
+    >
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="BrilhoMax Lava Rápido">
+        <span class="brand-mark" id="brandMark">BM</span>
+        <span>
+          <strong id="brandName">BrilhoMax</strong>
+          <small id="brandType">Lava Rápido</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Cliente</a>
+        <a href="painel.html">Painel</a>
+        <a href="#configuracoes">Configurações</a>
+        <button class="nav-button" id="logoutButton" type="button">Sair</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section login-section" id="loginPanel">
+        <form class="login-card" id="loginForm">
+          <p class="eyebrow">Área restrita</p>
+          <h1>Entrar nas configurações</h1>
+          <label>
+            Senha
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="button primary full-button" type="submit">Entrar</button>
+          <p class="form-message" id="loginMessage" role="status"></p>
+        </form>
+      </section>
+
+      <section id="adminContent" hidden>
+      <section id="configuracoes" class="section admin-page settings-page">
+        <div class="section-heading">
+          <p class="eyebrow">Administração</p>
+          <h1>Configurações</h1>
+          <p class="admin-subtitle">
+            Ajuste dados do lava rápido, serviços, tipos de veículo e horários disponíveis.
+          </p>
+        </div>
+        <div class="local-notice">
+          Estas configurações ficam salvas apenas neste navegador até migrarmos para banco online.
+        </div>
+
+        <form class="settings-form" id="settingsForm">
+          <section class="settings-block">
+            <div class="settings-block-heading">
+              <h2>Dados do negócio</h2>
+            </div>
+            <div class="form-grid">
+              <label>
+                Nome
+                <input name="name" required>
+              </label>
+              <label>
+                Tipo
+                <input name="type" required>
+              </label>
+              <label>
+                Sigla
+                <input name="shortName" maxlength="4" required>
+              </label>
+              <label>
+                WhatsApp
+                <input name="whatsapp" inputmode="tel" required>
+              </label>
+              <label>
+                Funcionamento
+                <input name="openingLabel" required>
+              </label>
+              <label>
+                Horário exibido
+                <input name="openingHours" required>
+              </label>
+              <label>
+                Boxes disponíveis
+                <input name="boxesAvailable" type="number" min="1" step="1" required>
+              </label>
+              <label class="full">
+                Endereço
+                <input name="address" required>
+              </label>
+            </div>
+          </section>
+
+          <section class="settings-block">
+            <div class="settings-block-heading">
+              <h2>Serviços</h2>
+              <button class="button ghost compact" id="addService" type="button">Adicionar serviço</button>
+            </div>
+            <div class="editor-list" id="serviceEditor"></div>
+          </section>
+
+          <section class="settings-block">
+            <div class="settings-block-heading">
+              <h2>Tipos de veículo</h2>
+              <button class="button ghost compact" id="addVehicle" type="button">Adicionar veículo</button>
+            </div>
+            <div class="editor-list" id="vehicleEditor"></div>
+          </section>
+
+          <section class="settings-block">
+            <div class="settings-block-heading">
+              <h2>Horários</h2>
+              <button class="button ghost compact" id="addTime" type="button">Adicionar horário</button>
+            </div>
+            <div class="editor-list time-editor" id="timeEditor"></div>
+          </section>
+
+          <div class="settings-actions">
+            <button class="button primary" type="submit">Salvar configurações</button>
+            <button class="button ghost danger-button" id="resetSettings" type="button">Restaurar padrão</button>
+          </div>
+          <p class="form-message" id="settingsMessage" role="status"></p>
+        </form>
+
+        <section class="settings-block password-block">
+          <div class="settings-block-heading">
+            <h2>Senha administrativa</h2>
+          </div>
+          <form class="form-grid" id="passwordForm">
+            <label>
+              Senha atual
+              <input name="currentPassword" type="password" autocomplete="current-password" required>
+            </label>
+            <label>
+              Nova senha
+              <input name="newPassword" type="password" autocomplete="new-password" required>
+            </label>
+            <label>
+              Confirmar nova senha
+              <input name="confirmPassword" type="password" autocomplete="new-password" required>
+            </label>
+            <button class="button ghost compact" type="submit">Alterar senha</button>
+          </form>
+          <p class="form-message" id="passwordMessage" role="status"></p>
+        </section>
+      </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span id="footerBusiness">BrilhoMax Lava Rápido</span>
+      <span>Configurações salvas neste navegador.</span>
+    </footer>
+
+    <script src="js/settings.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/dom.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/appointments.js"></script>
+    <script src="js/settings-page.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
