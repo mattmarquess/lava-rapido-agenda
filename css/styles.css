@@ -340,6 +340,12 @@ h2 {
   line-height: 1;
 }
 
+.login-reset {
+  justify-self: center;
+  color: var(--brand-dark);
+  font-size: 13px;
+}
+
 .settings-form {
   display: grid;
   gap: 18px;

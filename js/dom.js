@@ -38,6 +38,7 @@ const elements = {
   loginForm: document.querySelector("#loginForm"),
   loginPassword: document.querySelector("#loginPassword"),
   loginMessage: document.querySelector("#loginMessage"),
+  resetAdminPasswordButton: document.querySelector("#resetAdminPassword"),
   logoutButton: document.querySelector("#logoutButton"),
   passwordForm: document.querySelector("#passwordForm"),
   passwordMessage: document.querySelector("#passwordMessage"),

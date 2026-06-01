@@ -56,6 +56,13 @@ function handleLogout() {
   showLoginPanel();
 }
 
+function handlePasswordReset() {
+  clearAdminPassword();
+  sessionStorage.removeItem("brilhomax_admin_session");
+  elements.loginPassword.value = "";
+  elements.loginMessage.textContent = "Senha restaurada. Use 1234 para entrar.";
+}
+
 function handlePasswordSave(event) {
   event.preventDefault();
 
@@ -91,6 +98,10 @@ function initAuth() {
 
   if (elements.logoutButton) {
     elements.logoutButton.addEventListener("click", handleLogout);
+  }
+
+  if (elements.resetAdminPasswordButton) {
+    elements.resetAdminPasswordButton.addEventListener("click", handlePasswordReset);
   }
 
   if (elements.passwordForm) {

@@ -172,6 +172,10 @@ function saveAdminPassword(password) {
   localStorage.setItem(authStorageKey, password);
 }
 
+function clearAdminPassword() {
+  localStorage.removeItem(authStorageKey);
+}
+
 async function clearAppointments() {
   const client = getSupabaseClient();
 

@@ -12,6 +12,8 @@ Abra o arquivo `configuracoes.html` no navegador para editar dados do sistema.
 
 Senha inicial do painel e configurações: `1234`.
 
+Se a senha não funcionar em um navegador, use `Restaurar senha padrão 1234` na tela de login.
+
 Esta primeira versão não precisa de servidor, Node.js, npm, banco de dados ou hospedagem paga. Os agendamentos ficam salvos no próprio navegador usando `localStorage`.
 
 ## Estrutura dos arquivos
