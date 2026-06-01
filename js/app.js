@@ -56,6 +56,7 @@ function initProtectedAdminPage() {
 function init() {
   applySavedSettings();
   renderBusinessInfo();
+  renderConnectionStatus();
   initAuth();
 
   if (elements.bookingForm) {

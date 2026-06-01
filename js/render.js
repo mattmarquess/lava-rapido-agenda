@@ -12,6 +12,17 @@ function renderBusinessInfo() {
   if (elements.footerBusiness) elements.footerBusiness.textContent = fullName;
 }
 
+function renderConnectionStatus() {
+  if (!elements.connectionStatus) return;
+
+  const connected = isSupabaseEnabled();
+
+  elements.connectionStatus.className = `connection-status ${connected ? "online" : "local"}`;
+  elements.connectionStatus.textContent = connected
+    ? "Banco online conectado"
+    : "Modo local neste navegador";
+}
+
 function renderServices() {
   if (!elements.serviceGrid) return;
 

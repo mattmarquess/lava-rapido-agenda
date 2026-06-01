@@ -83,6 +83,7 @@ O arquivo gerado será `lava-rapido-agenda-site.zip`.
 - Geração de dados de demonstração no painel
 - Preparação para publicação no GitHub Pages
 - Integração opcional com Supabase para agendamentos online
+- Indicador visual de conexão online/local no painel e configurações
 - Status do serviço: Agendado, Em atendimento, Pronto, Entregue e Cancelado
 
 ## Próximo passo

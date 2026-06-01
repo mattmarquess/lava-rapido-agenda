@@ -46,5 +46,6 @@ const elements = {
   importDataInput: document.querySelector("#importData"),
   clearAllDataButton: document.querySelector("#clearAllData"),
   backupMessage: document.querySelector("#backupMessage"),
-  seedDemoDataButton: document.querySelector("#seedDemoData")
+  seedDemoDataButton: document.querySelector("#seedDemoData"),
+  connectionStatus: document.querySelector("#connectionStatus")
 };
