@@ -81,6 +81,12 @@ const settingsStorageKey = "brilhomax_settings";
 const authStorageKey = "brilhomax_admin_auth";
 const defaultAdminPassword = "1234";
 
+const supabaseConfig = {
+  url: "",
+  anonKey: "",
+  businessId: "brilhomax"
+};
+
 const defaultSettings = {
   business: { ...business },
   services: services.map((service) => ({ ...service })),

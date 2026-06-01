@@ -40,14 +40,14 @@ function createDemoAppointment(index, date) {
   };
 }
 
-function handleSeedDemoData() {
+async function handleSeedDemoData() {
   const date = elements.panelDateInput.value || todayISO();
-  const existingAppointments = getAppointments();
+  const existingAppointments = await getAppointments();
   const appointmentsFromOtherDays = existingAppointments.filter((appointment) => appointment.date !== date);
   const demoAppointments = Array.from({ length: 6 }, (_, index) => createDemoAppointment(index, date));
 
-  saveAppointments([...appointmentsFromOtherDays, ...demoAppointments]);
-  renderAppointments();
+  await saveAppointments([...appointmentsFromOtherDays, ...demoAppointments]);
+  await renderAppointments();
   elements.backupMessage.textContent = "Demonstração criada para a data selecionada.";
 }
 

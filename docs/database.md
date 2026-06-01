@@ -1,55 +1,74 @@
-# Rascunho do Banco de Dados
+# Banco de Dados Supabase
 
-Este é o modelo inicial para quando o projeto migrar para Supabase/PostgreSQL.
+Este é o SQL inicial para usar o projeto com Supabase/PostgreSQL.
+
+## Agendamentos
+
+Execute este bloco no Supabase em `SQL Editor`.
 
 ```sql
-create table businesses (
-  id uuid primary key default gen_random_uuid(),
-  name text not null,
-  slug text not null unique,
-  phone text,
-  address text,
-  created_at timestamptz not null default now()
-);
-
-create table services (
-  id uuid primary key default gen_random_uuid(),
-  business_id uuid not null references businesses(id),
-  name text not null,
-  description text,
-  base_price numeric(10, 2) not null,
-  duration_minutes integer not null,
-  active boolean not null default true,
-  created_at timestamptz not null default now()
-);
-
-create table vehicle_types (
-  id uuid primary key default gen_random_uuid(),
-  name text not null,
-  price_multiplier numeric(6, 2) not null default 1
-);
-
-create table customers (
-  id uuid primary key default gen_random_uuid(),
-  name text not null,
-  phone text not null,
-  created_at timestamptz not null default now()
-);
-
 create table appointments (
-  id uuid primary key default gen_random_uuid(),
-  business_id uuid not null references businesses(id),
-  service_id uuid not null references services(id),
-  vehicle_type_id uuid not null references vehicle_types(id),
-  customer_id uuid not null references customers(id),
+  id text primary key,
+  business_id text not null,
+  customer_name text not null,
+  customer_phone text not null,
   vehicle_plate text not null,
+  vehicle_name text not null,
+  service_name text not null,
+  service_id text not null,
   appointment_date date not null,
   start_time time not null,
   status text not null default 'Agendado',
   notes text,
-  final_price numeric(10, 2) not null,
+  price numeric(10, 2) not null,
   created_at timestamptz not null default now()
 );
+
+create index appointments_business_date_idx
+  on appointments (business_id, appointment_date, start_time);
 ```
 
-No começo, podemos usar apenas uma barbearia/lava rápido por sistema. Depois, se virar SaaS, a tabela `businesses` permite ter vários estabelecimentos no mesmo produto.
+## Políticas para o protótipo
+
+Para esta versão estática publicada no GitHub Pages, o frontend usa a chave pública `anon`.
+Use estas políticas apenas para protótipo e demonstração.
+
+```sql
+alter table appointments enable row level security;
+
+create policy "Public read appointments"
+on appointments for select
+using (true);
+
+create policy "Public insert appointments"
+on appointments for insert
+with check (true);
+
+create policy "Public update appointments"
+on appointments for update
+using (true)
+with check (true);
+
+create policy "Public delete appointments"
+on appointments for delete
+using (true);
+```
+
+## Configurar o site
+
+Depois de criar o projeto no Supabase, copie:
+
+- `Project URL`
+- `anon public key`
+
+Cole em `js/settings.js`:
+
+```js
+const supabaseConfig = {
+  url: "SUA_SUPABASE_URL",
+  anonKey: "SUA_SUPABASE_ANON_KEY",
+  businessId: "brilhomax"
+};
+```
+
+Quando `url` e `anonKey` estiverem preenchidos, o sistema passa a ler e salvar agendamentos no Supabase. Se ficarem vazios, continua usando `localStorage`.

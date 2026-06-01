@@ -28,12 +28,21 @@ function countBookingsAtSameTime(appointment, appointments) {
   ).length;
 }
 
-function handleBooking(event) {
+async function handleBooking(event) {
   event.preventDefault();
 
   const formData = new FormData(elements.bookingForm);
   const appointment = createAppointment(formData);
-  const appointments = getAppointments();
+
+  let appointments = [];
+
+  try {
+    appointments = await getAppointments();
+  } catch (error) {
+    elements.formMessage.textContent = `Não foi possível carregar a agenda: ${error.message}`;
+    return;
+  }
+
   const bookingsAtSameTime = countBookingsAtSameTime(appointment, appointments);
 
   if (bookingsAtSameTime >= business.boxesAvailable) {
@@ -41,10 +50,16 @@ function handleBooking(event) {
     return;
   }
 
-  saveAppointments([...appointments, appointment]);
+  try {
+    await addAppointment(appointment);
+  } catch (error) {
+    elements.formMessage.textContent = `Não foi possível confirmar: ${error.message}`;
+    return;
+  }
+
   if (elements.panelDateInput) {
     elements.panelDateInput.value = appointment.date;
-    renderAppointments();
+    await renderAppointments();
   }
   elements.bookingForm.reset();
   elements.bookingDateInput.value = todayISO();
@@ -52,48 +67,37 @@ function handleBooking(event) {
   elements.formMessage.textContent = "Agendamento confirmado. O painel já foi atualizado.";
 }
 
-function handleStatusChange(event) {
+async function handleStatusChange(event) {
   if (!event.target.matches(".status-select")) return;
 
   const id = event.target.dataset.id;
-  const appointments = getAppointments().map((appointment) =>
-    appointment.id === id ? { ...appointment, status: event.target.value } : appointment
-  );
 
-  saveAppointments(appointments);
-  renderAppointments();
+  await updateAppointmentStatus(id, event.target.value);
+  await renderAppointments();
 }
 
-function handleLookup(event) {
+async function handleLookup(event) {
   event.preventDefault();
-  renderCustomerAppointments(elements.lookupPhoneInput.value);
+  await renderCustomerAppointments(elements.lookupPhoneInput.value);
 }
 
-function handleCustomerAction(event) {
+async function handleCustomerAction(event) {
   const button = event.target.closest("[data-cancel-id]");
   if (!button) return;
 
   const id = button.dataset.cancelId;
-  const appointments = getAppointments().map((appointment) =>
-    appointment.id === id ? { ...appointment, status: "Cancelado" } : appointment
-  );
-
-  saveAppointments(appointments);
-  renderCustomerAppointments(elements.lookupPhoneInput.value);
-  renderAppointments();
+  await updateAppointmentStatus(id, "Cancelado");
+  await renderCustomerAppointments(elements.lookupPhoneInput.value);
+  await renderAppointments();
 }
 
-function handleAdminAction(event) {
+async function handleAdminAction(event) {
   const button = event.target.closest("[data-cancel-id]");
   if (!button) return;
 
   const id = button.dataset.cancelId;
-  const appointments = getAppointments().map((appointment) =>
-    appointment.id === id ? { ...appointment, status: "Cancelado" } : appointment
-  );
-
-  saveAppointments(appointments);
-  renderAppointments();
+  await updateAppointmentStatus(id, "Cancelado");
+  await renderAppointments();
 }
 
 function handleStatusFilter(event) {
@@ -108,8 +112,8 @@ function handleStatusFilter(event) {
   renderAppointments();
 }
 
-function clearFinishedAppointments() {
-  const appointments = getAppointments().filter((appointment) => !finishedStatuses.includes(appointment.status));
-  saveAppointments(appointments);
-  renderAppointments();
+async function clearFinishedAppointments() {
+  const appointments = (await getAppointments()).filter((appointment) => !finishedStatuses.includes(appointment.status));
+  await saveAppointments(appointments);
+  await renderAppointments();
 }

@@ -12,7 +12,6 @@ function createBackupPayload() {
     app: "brilhomax-lava-rapido",
     version: 1,
     exportedAt: new Date().toISOString(),
-    appointments: getAppointments(),
     settings: getSavedSettings() || getCurrentSettingsSnapshot()
   };
 }
@@ -30,11 +29,13 @@ function downloadJSON(filename, data) {
   URL.revokeObjectURL(url);
 }
 
-function handleExportData() {
+async function handleExportData() {
   const date = todayISO();
   const filename = `backup-brilhomax-${date}.json`;
+  const payload = createBackupPayload();
 
-  downloadJSON(filename, createBackupPayload());
+  payload.appointments = await getAppointments();
+  downloadJSON(filename, payload);
   elements.backupMessage.textContent = "Backup exportado.";
 }
 
@@ -51,12 +52,12 @@ function validateBackupPayload(payload) {
   );
 }
 
-function importBackupPayload(payload) {
-  saveAppointments(payload.appointments);
+async function importBackupPayload(payload) {
+  await saveAppointments(payload.appointments);
   saveSettings(payload.settings);
   applySavedSettings();
   renderBusinessInfo();
-  renderAppointments();
+  await renderAppointments();
 }
 
 function handleImportData(event) {
@@ -66,7 +67,7 @@ function handleImportData(event) {
 
   const reader = new FileReader();
 
-  reader.addEventListener("load", () => {
+  reader.addEventListener("load", async () => {
     try {
       const payload = JSON.parse(reader.result);
 
@@ -75,7 +76,7 @@ function handleImportData(event) {
         return;
       }
 
-      importBackupPayload(payload);
+      await importBackupPayload(payload);
       elements.backupMessage.textContent = "Backup importado com sucesso.";
     } catch (error) {
       elements.backupMessage.textContent = "Não foi possível ler o arquivo.";
@@ -87,16 +88,16 @@ function handleImportData(event) {
   reader.readAsText(file);
 }
 
-function handleClearAllData() {
+async function handleClearAllData() {
   const confirmed = confirm("Tem certeza que deseja apagar agendamentos e configurações deste navegador?");
 
   if (!confirmed) return;
 
-  clearAppointments();
+  await clearAppointments();
   clearSavedSettings();
   applyDefaultSettings();
   renderBusinessInfo();
-  renderAppointments();
+  await renderAppointments();
   elements.backupMessage.textContent = "Dados locais apagados.";
 }
 

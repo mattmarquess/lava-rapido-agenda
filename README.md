@@ -38,6 +38,7 @@ docs/
   database.md       Modelo futuro do banco para Supabase/PostgreSQL
   deploy-github-pages.md  Guia para publicar grátis no GitHub Pages
   publish-checklist.md     Checklist antes de enviar o link para clientes
+  supabase-setup.md        Guia para ligar o projeto ao Supabase
 tools/
   create-publish-package.ps1  Cria um arquivo .zip com os arquivos do site
 ```
@@ -49,6 +50,8 @@ Também é possível mudar esses dados pela tela `configuracoes.html`. As altera
 O login atual é local, usando `sessionStorage` para a sessão e `localStorage` para a senha alterada. Ele serve para protótipo e apresentação, mas a versão online deve trocar isso por autenticação real.
 
 Para publicar uma demonstração grátis, siga o guia em `docs/deploy-github-pages.md`.
+
+Para salvar agendamentos online, siga `docs/supabase-setup.md`.
 
 Para gerar um pacote `.zip` do site:
 
@@ -77,6 +80,7 @@ O arquivo gerado será `lava-rapido-agenda-site.zip`.
 - Limpeza dos dados locais pelo painel
 - Geração de dados de demonstração no painel
 - Preparação para publicação no GitHub Pages
+- Integração opcional com Supabase para agendamentos online
 - Status do serviço: Agendado, Em atendimento, Pronto, Entregue e Cancelado
 
 ## Próximo passo

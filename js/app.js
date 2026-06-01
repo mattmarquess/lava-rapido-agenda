@@ -27,10 +27,10 @@ function initSettingsPage() {
   elements.resetSettingsButton.addEventListener("click", handleSettingsReset);
 }
 
-function initPanelPage() {
+async function initPanelPage() {
   renderStatusFilters();
   elements.panelDateInput.value = todayISO();
-  renderAppointments();
+  await renderAppointments();
   initBackupTools();
   initDemoTools();
 

@@ -82,16 +82,28 @@ function renderPanelStats(appointments) {
   `;
 }
 
-function renderAppointments() {
+async function renderAppointments() {
   if (!elements.panelDateInput || !elements.appointmentsList) return;
 
   const date = elements.panelDateInput.value;
   const activeFilter = elements.statusFilters?.querySelector(".active")?.dataset.status || "Todos";
-  const appointments = getAppointments()
+
+  let allAppointments = [];
+
+  try {
+    allAppointments = await getAppointments();
+  } catch (error) {
+    elements.appointmentsList.innerHTML = `
+      <div class="empty-state">Não foi possível carregar os agendamentos: ${error.message}</div>
+    `;
+    return;
+  }
+
+  const appointments = allAppointments
     .filter((appointment) => appointment.date === date)
     .filter((appointment) => activeFilter === "Todos" || appointment.status === activeFilter)
     .sort((a, b) => a.time.localeCompare(b.time));
-  const appointmentsForStats = getAppointments().filter((appointment) => appointment.date === date);
+  const appointmentsForStats = allAppointments.filter((appointment) => appointment.date === date);
 
   renderPanelStats(appointmentsForStats);
 
@@ -156,11 +168,23 @@ function renderStatusFilters() {
     .join("");
 }
 
-function renderCustomerAppointments(phone) {
+async function renderCustomerAppointments(phone) {
   if (!elements.customerAppointments) return;
 
   const normalizedPhone = normalizePhone(phone);
-  const appointments = getAppointments()
+
+  let allAppointments = [];
+
+  try {
+    allAppointments = await getAppointments();
+  } catch (error) {
+    elements.customerAppointments.innerHTML = `
+      <div class="empty-state">Não foi possível buscar seus agendamentos: ${error.message}</div>
+    `;
+    return;
+  }
+
+  const appointments = allAppointments
     .filter((appointment) => normalizePhone(appointment.customerPhone) === normalizedPhone)
     .sort((a, b) => `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`));
 
